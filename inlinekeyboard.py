@@ -52,7 +52,7 @@ def buttun_dilevery():
     mark1.row_width = 1
     mark1.add(InlineKeyboardButton("Хорошо👍🏿", callback_data="good1"),
               InlineKeyboardButton("Не получил заказ в указанный интервал", callback_data="dont_take"),
-              # InlineKeyboardButton("Внести изменения в доставку🚗 ", callback_data="change_delivery"),
+              #InlineKeyboardButton("Внести изменения в доставку🚗 ", callback_data="change_delivery"),
               InlineKeyboardButton("Назад🔙", callback_data="back_back"))
     return mark1
 
