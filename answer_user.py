@@ -84,34 +84,55 @@ def user_people(message):
     bot.delete_state(message.from_user.id, message.chat.id)
 
 
-@bot.message_handler(content_types=['text'], state=Mystate.cheep_state)
+@bot.message_handler(content_types=util.content_type_media, chat_types=['private'], state=Mystate.cheep_state)
 def user_cheep(message):
     bot.send_message(chat_id=admin_chat_id, text=f'Данный пользователь {message.from_user.first_name}'
                                                  f' хочет отменить заказ.'
                                                  f'Его сообщение')
-    bot.forward_message(chat_id=admin_chat_id, from_chat_id=message.chat.id, message_id=message.id)
+    mk = types.InlineKeyboardMarkup()
+    mk.add(types.InlineKeyboardButton(text='Пользователь 👤', url='tg://user?id={id}'.format(id=message.from_user.id)))
+    f = bot.forward_message(chat_id=adm_chat, from_chat_id=message.chat.id, message_id=message.message_id)
+    bot.send_message(chat_id=adm_chat, text='''#id{id}'''.format(id=message.chat.id), reply_to_message_id=f.message_id,
+                     reply_markup=mk)
+    xm = bot.send_message(chat_id=message.chat.id,
+                          text='''<b>Ваше сообщение было <i>успешно доставлено</i> администратору ✅</b>, вам скоро ответят)''',
+                          reply_to_message_id=message.message_id)
     bot.send_message(chat_id=message.chat.id, text="В течении 24 часов с вами свяжется оператор",
                      reply_markup=finish())
     bot.delete_state(message.from_user.id, message.chat.id)
 
 
-@bot.message_handler(content_types=['text'], state=Mystate.long_dilevery)
+@bot.message_handler(content_types=util.content_type_media, chat_types=['private'], state=Mystate.long_dilevery)
 def user_long_dilevery(message):
     bot.send_message(chat_id=admin_chat_id, text=f'Данный пользователь {message.from_user.first_name}'
                                                  f' хочет отменить заказ.'
                                                  f'Его сообщение')
-    bot.forward_message(chat_id=admin_chat_id, from_chat_id=message.chat.id, message_id=message.id)
+    mk = types.InlineKeyboardMarkup()
+    mk.add(types.InlineKeyboardButton(text='Пользователь 👤', url='tg://user?id={id}'.format(id=message.from_user.id)))
+    f = bot.forward_message(chat_id=adm_chat, from_chat_id=message.chat.id, message_id=message.message_id)
+    bot.send_message(chat_id=adm_chat, text='''#id{id}'''.format(id=message.chat.id), reply_to_message_id=f.message_id,
+                     reply_markup=mk)
+    xm = bot.send_message(chat_id=message.chat.id,
+                          text='''<b>Ваше сообщение было <i>успешно доставлено</i> администратору ✅</b>, вам скоро ответят)''',
+                          reply_to_message_id=message.message_id)
     bot.send_message(chat_id=message.chat.id, text="В течении 24 часов с вами свяжется оператор",
                      reply_markup=finish())
     bot.delete_state(message.from_user.id, message.chat.id)
 
 
-@bot.message_handler(content_types=['text'], state=Mystate.another)
+@bot.message_handler(content_types=util.content_type_media, chat_types=['private'], state=Mystate.another)
 def user_another(message):
     bot.send_message(chat_id=admin_chat_id, text=f'Данный пользователь {message.from_user.first_name}'
                                                  f' хочет отменить заказ.'
                                                  f'Его сообщение')
-    bot.forward_message(chat_id=admin_chat_id, from_chat_id=message.chat.id, message_id=message.id)
+    mk = types.InlineKeyboardMarkup()
+    mk.add(types.InlineKeyboardButton(text='Пользователь 👤', url='tg://user?id={id}'.format(id=message.from_user.id)))
+    f = bot.forward_message(chat_id=adm_chat, from_chat_id=message.chat.id, message_id=message.message_id)
+    bot.send_message(chat_id=adm_chat, text='''#id{id}'''.format(id=message.chat.id), reply_to_message_id=f.message_id,
+                     reply_markup=mk)
+    xm = bot.send_message(chat_id=message.chat.id,
+                          text='''<b>Ваше сообщение было <i>успешно доставлено</i> администратору ✅</b>, вам скоро ответят)''',
+                          reply_to_message_id=message.message_id)
     bot.send_message(chat_id=message.chat.id, text="В течении 24 часов с вами свяжется оператор",
                      reply_markup=finish())
     bot.delete_state(message.from_user.id, message.chat.id)
