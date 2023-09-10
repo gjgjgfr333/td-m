@@ -1,19 +1,124 @@
 from telebot.types import CallbackQuery
 from start import Mystate
-
 from loader import bot, admin_chat_id
 from inlinekeyboard import button_for_order, button_cgange, button_pay, buttun_dilevery, buttun_dilevery1, \
     button_delete, button_order_cut, button_cgange1, buttont, back, wellcome_markup, good, dont_take_order, \
-    button_order_not_need, finish, msgg
-
+    button_order_not_need, finish, msgg, for_sellerss, url_button, kross_marketing, akt_tovara
+from  nitification import data_list
+from notification__user import data_list_user
 
 @bot.callback_query_handler(func=lambda call: True)
 def answer(call: CallbackQuery):
     if call.data == "resume":
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
-                              text="Подскажите пожалуйста с чем связан ваш вопрос? \n\nВыберите пункт из меню ниже:",
+                              text="Подскажите, пожалуйста, с чем связан ваш вопрос? \n\nВыберите пункт из меню ниже:",
                               reply_markup=wellcome_markup())
 
+    elif call.data == "for_sellers":
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
+                              text="Выберите пункт который вас"
+                                   " интересует из предложенных ниже",
+                              reply_markup=for_sellerss())
+
+    elif call.data == "seller_create":
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
+                              text="<b>Для начала продаж на td-market необходимо</b>\n"
+                                   "Просто пройти не сложную регистрацию и все, начинай прямо сейчас"
+                                   "по ссылке ниже",
+                              reply_markup=url_button())
+
+    elif call.data == "cross_mark":
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
+                              text="Если вы хотите получить бесплатную подписку на месяц "
+                                   "то вы попали по адрессу)\n\n"
+                                   "Для того чтобы получить бесплатную подписку на месяц вам необходимо сделать "
+                                   "следующее:\n\n"
+                                   "1.Опубликовать историю с фото(прилагается ниже)"
+                                   "и надписью о том что вы начали продавать на "
+                                   "td-market.\n"
+                                   "2.Добавить ссылку своего магазина td-market в шапку профиля вашего instagram "
+                                   "аккаунта.\n3. Нажать на кнопку \"Выполнено\" и отправить ссылку на свой"
+                                   "instagram аккаунт. ",
+                              reply_markup=kross_marketing(), )
+
+    elif call.data == "notification":
+        data = {'email': None, 'password': None, 'chatId': None}
+        data_list.append(data)
+        user_data = data_list[-1]
+        if user_data['chatId'] is None:
+            user_data['chatId'] = str(call.message.chat.id)
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
+                              text="Для получения уведомлений о заказах Ваших товаров пользователями Вам необходимо"
+                                   "пройти авторизацию.\n Для этого введите <b>логин</b> от вашего аккаунта td-market")
+        bot.set_state(call.from_user.id,Mystate.notification1,call.message.chat.id)
+
+    elif call.data == "notofication_user":
+        data = {'email': None, 'password': None, 'chatId': None}
+        data_list_user.append(data)
+        user_data = data_list_user[-1]
+        if user_data['chatId'] is None:
+            user_data['chatId'] = str(call.message.chat.id)
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
+                              text="Для получения уведомлений о заказах Ваших товаров пользователями Вам необходимо"
+                                   "пройти авторизацию.\n Для этого введите <b>логин</b> от вашего аккаунта td-market")
+        bot.set_state(call.from_user.id,Mystate.notification,call.message.chat.id)
+
+    elif call.data == "photochka":
+        with open('photo.jpg', 'rb') as file:
+            photo = file.read()
+        bot.send_photo(chat_id=call.message.chat.id,
+                       photo=photo, reply_markup=back())
+
+    elif call.data == "pay/callback":
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
+        text="Способ возврата товара зависит от способа выбранной Вами доставки.\n\n"
+             "Если при оформлении заказа Вы выбрали способ доставки 'Самовывоз', то просто отнесите товар туда откуда вы его"
+             " получали, но не позднее 10 дней с момента получения.\n\n"
+             "Если при оформлении заказа Вы выбрали способ доставки 'До двери', курьер должен был вручить вам"
+             " <b>АКТ ПРИЕМА-ПЕРЕДАЧИ ТОВАРА</b>. В нем указаны данные продавца"
+             ", по ним вы сможете связаться с продавцом и вернуть товар.\n\n Если курьер не вручил вам <b>АКТ ПРИЕМА-ПЕРЕДАЧИ ТОВАРА</b>"
+             ", то для возврата товара продавцу Вам необходимо написать свое ФИО и номер заказа, после этого Администрация "
+             "вышлет Вам все необходимые данные для возврата товара. ")
+        bot.set_state(call.from_user.id, Mystate.callback_staff,call.message.chat.id)
+
+    elif call.data == "for_sellers_yes":
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
+                              text='<b>Отпаравьте ссылку на ваш instagram аккаунт</b>, Администрация проверит наличие '
+                                   'следующих'
+                                   'пунктов:\n\n 1.Опубликовать историю с фото'
+                                   "и нажписью о том что вы начали продавать на "
+                                   "td-market.\n"
+                                   "2.Добавить ссылку своего магазина td-market в шапку профиля вашего instagram "
+                                   "аккаунта.\n3. Нажать на кнопку \"Выполнено\" и отправить ссылку на свой"
+                                   "instagram аккаокунт.\n\n <b>Если все бутет в порядке, мы вашлим вам промокод"
+                                   "для получения бесплатной подписки на месяяц)</b> ")
+
+        bot.set_state(call.from_user.id, Mystate.seller_state, call.message.chat.id)
+
+    elif call.data == "seller_dilevery":
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
+                              text='В маркетплейсе td-market предусмотренно два вида доставки товара:\n\n'
+                                   '1. Доставка товара покупателю курьерами td-market.\n2. Доставка товара покупателю '
+                                   'силами продавца.\n\n'
+                                   'В случае если Вы доставляете товар своими силами, то Вам необходимо вручать '
+                                   'покупателю АКТ'
+                                   'ПРИЕМА-ПЕРЕДАЧИ ТОВАРА . Он нужен для:\n\n '
+                                   '1. Покупатель подтверждает, что Он получил товар и у товара отсутствуют явные '
+                                   'видимые дефекты.\n'
+                                   '2. В случае, если товар имеет скрытые дефекты, покупатель будет иметь возможность '
+                                   'связаться с вами.\n\n'
+                                   'В случае если нет подписанного АКТА '
+                                   'ПРИЕМА-ПЕРЕДАЧИ ТОВАРА, td-market не сможет удостовериться в выполнении доставки '
+                                   'Вами покупателю.\n'
+                                   'АКТ ПРИЕМА-ПЕРЕДАЧИ ТОВАРА подписывается в двух экземплярах. Один остаётся у '
+                                   'Покупателя, второй остаётся'
+                                   'у Продавца.', reply_markup=akt_tovara())
+
+    elif call.data == "akt":
+        with open('АКТ.docx', 'rb') as file:
+            f = file.read()
+        bot.send_document(chat_id=call.message.chat.id, document=f,
+                          reply_markup=back())
 
     elif call.data == "order":
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text="Один момент, скажите, "
@@ -52,9 +157,9 @@ def answer(call: CallbackQuery):
                               text="Выберите сопособ общения", reply_markup=msgg())
 
     elif call.data == "back":
-        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
-                              text="Подскажите пожалуйста с чем связан ваш вопрос? \n\nВыберите пункт из меню ниже:"
-                              , reply_markup=wellcome_markup())
+        bot.send_message(chat_id=call.message.chat.id,
+                         text="Подскажите пожалуйста с чем связан ваш вопрос? \n\nВыберите пункт из меню ниже:"
+                         , reply_markup=wellcome_markup())
 
     elif call.data == "Express_delivery":
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
@@ -111,7 +216,8 @@ def answer(call: CallbackQuery):
                               reply_markup=buttont())
     elif call.data == "data":
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
-                              text="Напишите пожалуйста, номер вашего заказа, ваше Имя, Фамилию и дату, когда Вы сможете получить заказ. В ближайшее время с вами свяжется Оператор")
+                              text="Напишите пожалуйста, номер вашего заказа, ваше Имя, Фамилию и дату, когда Вы "
+                                   "сможете получить заказ. В ближайшее время с вами свяжется Оператор")
         bot.set_state(call.from_user.id, Mystate.data_state, call.message.chat.id)
     elif call.data == "time":
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,

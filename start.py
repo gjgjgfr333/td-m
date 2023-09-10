@@ -22,7 +22,10 @@ class Mystate(StatesGroup):
     bag = State()
     no_answer = State()
     admin_call_1 = State()
-
+    seller_state = State()
+    callback_staff = State()
+    notification = State()
+    notification1 = State()
 
 @bot.message_handler(commands=['start'])
 def wellcome(message):

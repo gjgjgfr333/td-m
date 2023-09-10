@@ -27,15 +27,26 @@ def msgg():
 def wellcome_markup():
     markup = InlineKeyboardMarkup()
     markup.row_width = 1
-    markup.add(InlineKeyboardButton("Когда будет доставлен мой заказ?🚚👨‍🦽", callback_data="order"),
+    markup.add(InlineKeyboardButton(text="Получать уведомления от td-market🔔", callback_data="notofication_user"),
+               InlineKeyboardButton("Когда будет доставлен мой заказ?🚚", callback_data="order"),
                InlineKeyboardButton("Изменить заказ⚒ ", callback_data="change"),
                InlineKeyboardButton("Отменить заказ🚫", callback_data="delete"),
                InlineKeyboardButton("Статус после оплаты не поменялся🤢", callback_data="statys_dont_change"),
-               # InlineKeyboardButton("Оплата/возврат💵", callback_data="pay/callback"),
+               InlineKeyboardButton("Как мне вернуть заказ?💵", callback_data="pay/callback"),
                InlineKeyboardButton("Я нашел баг🕵🏻‍♀️", callback_data="bag"),
-               InlineKeyboardButton("Я не нашел ответа(☹️", callback_data="dont_find_answer"))
+               InlineKeyboardButton("Я не нашел ответа(☹️", callback_data="dont_find_answer"),
+               InlineKeyboardButton(text='Для продавца 🧌', callback_data='for_sellers'))
     return markup
 
+def for_sellerss():
+    markup9 = InlineKeyboardMarkup()
+    markup9.row_width = 1
+    markup9.add(InlineKeyboardButton("Стать продавцом🧌", callback_data="seller_create"),
+               InlineKeyboardButton("Для сотрудничества(кроссмаркетинг)💰", callback_data="cross_mark"),
+               InlineKeyboardButton("Доставка👣", callback_data="seller_dilevery"),
+                InlineKeyboardButton(text="Получать уведомления от td-market", callback_data="notification" ))
+
+    return markup9
 
 def button_for_order():
     mark = InlineKeyboardMarkup()
@@ -56,6 +67,27 @@ def buttun_dilevery():
               InlineKeyboardButton("Назад🔙", callback_data="back_back"))
     return mark1
 
+def kross_marketing():
+    key = InlineKeyboardMarkup()
+    key.row_width = 1
+    key.add(InlineKeyboardButton(text='Выполнено👍',callback_data="for_sellers_yes"),
+            InlineKeyboardButton("Назад🔙", callback_data="for_sellers"),
+            InlineKeyboardButton("Фоточка📷", callback_data="photochka"))
+    return key
+
+def akt_tovara():
+    key = InlineKeyboardMarkup()
+    key.row_width = 1
+    key.add(InlineKeyboardButton(text='Получить АКТ ПРИЕМА-ПЕРЕДАЧИ ТОВАРА',callback_data='akt'),
+            InlineKeyboardButton("Назад🔙", callback_data="for_sellers"))
+    return key
+
+def url_button():
+    key = InlineKeyboardMarkup()
+    key.row_width = 1
+    key.add(InlineKeyboardButton(text='Перейти на сайт🧞‍♂️',url='https://td-market.md/registration'),
+            InlineKeyboardButton("Назад🔙", callback_data="for_sellers"))
+    return key
 
 def button_cgange():
     key = InlineKeyboardMarkup()
