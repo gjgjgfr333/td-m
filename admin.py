@@ -13,7 +13,7 @@ from start import Mystate
 
 
 
-
+ф=2
 # обработчик команды /send_all
 @bot.message_handler(commands=['all'])
 def send_to_all(message):
