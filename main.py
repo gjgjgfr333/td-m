@@ -5,6 +5,7 @@ from start import bot
 from answer import bot
 from answer_user import bot
 from nitification import bot
+from erro_notifi import bot
 
 
 __all__ = ['bot']
