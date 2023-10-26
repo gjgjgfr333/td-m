@@ -8,7 +8,10 @@ from start import Mystate
 
 
 
-
+@bot.message_handler(commands=['end'])
+def bot_off(message):
+    bot.send_message(chat_id=message.chat.id, text='бот выключен')
+    bot.stop_bot()
 
 
 
