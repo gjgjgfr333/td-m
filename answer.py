@@ -1,3 +1,5 @@
+import random
+import requests
 from telebot.types import CallbackQuery
 from start import Mystate
 from loader import bot, admin_chat_id
@@ -6,6 +8,8 @@ from inlinekeyboard import button_for_order, button_cgange, button_pay, buttun_d
     button_order_not_need, finish, msgg, for_sellerss, url_button, kross_marketing, akt_tovara
 from  nitification import data_list
 from notification__user import data_list_user
+from answer_user import user_chat_ids
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def answer(call: CallbackQuery):
@@ -81,6 +85,47 @@ def answer(call: CallbackQuery):
              "вышлет Вам все необходимые данные для возврата товара. ")
         bot.set_state(call.from_user.id, Mystate.callback_staff,call.message.chat.id)
 
+    elif call.data == "crossmark_yes":
+        random_digits = ''.join(str(random.randint(0, 9)) for _ in range(6))
+        server_url='https://api.td-market.md/admin/promocode/{random_digits}'
+        response = requests.get(f"{server_url}")
+        if response.status_code == 200:
+            print(f"Error sending data: {response.status_code}")
+            print(response)
+        else:
+            print(f"Error sending data: {response.status_code}")
+            print(response)
+        xm=bot.send_message(chat_id=call.message.chat.id, text=f'Поздравляем ваши данные прошли проверку администратором,'
+                                                    f'вот ваш промо-код:<b>{random_digits}</b>\n\n'
+                                                    f'используйте его на странице "Тариф".\n'
+                                                    f'Он позволит вам в течение одного месяца реализовывать товары'
+                                                    f'на площадке td-market абсолютно бесплатно.\n'
+                                                    f'Хорошего вам настроения и удачных продаж)')
+        last_message=xm.message_id
+
+        print(user_chat_ids)
+        # Прямая пересылка исходного сообщения пользователя в чат админа
+        bot.copy_message(chat_id=user_chat_ids[0], from_chat_id=call.message.chat.id, message_id=last_message,reply_markup=
+                         finish())
+        bot.delete_message(chat_id=call.message.chat.id,message_id=last_message)
+        user_chat_ids.clear()
+    elif call.data == "crossmark_no":
+        xm=bot.send_message(chat_id=call.message.chat.id, text='<b>Ваши данные не прошли проверку администратором.</b>\n'
+                                                               'Проверьте соответствие всех пунктов получения промокода и попробуйте снова.\n'
+                                                               "Для того чтобы получить бесплатную подписку на месяц вам необходимо сделать "
+                                   "следующее:\n\n"
+                                   "1.Опубликовать историю с фото(прилагается ниже)"
+                                   "и надписью о том что вы начали продавать на "
+                                   "td-market.\n"
+                                   "2.Добавить ссылку своего магазина td-market в шапку профиля вашего instagram "
+                                   "аккаунта.\n3. Нажать на кнопку \"Выполнено\" и отправить ссылку на свой"
+                                   "instagram аккаунт. ")
+        last_message=xm.message_id
+        bot.copy_message(chat_id=user_chat_ids[0], from_chat_id=call.message.chat.id, message_id=last_message,reply_markup=
+                         finish())
+        bot.delete_message(chat_id=call.message.chat.id,message_id=last_message)
+        user_chat_ids.clear()
+        print(user_chat_ids)
     elif call.data == "for_sellers_yes":
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
                               text='<b>Отпаравьте ссылку на ваш instagram аккаунт</b>, Администрация проверит наличие '

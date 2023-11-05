@@ -23,7 +23,7 @@ async def check_SERVER():
         else:
             send_message(adm_chat, "упал")
             send_message(adm_chat2, "упал")
-            await asyncio.sleep(1800)
+            await asyncio.sleep(2600)
             print("упал")
 
 # Определение асинхронной функции send_request()

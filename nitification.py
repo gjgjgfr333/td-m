@@ -8,14 +8,7 @@ notify_endpoint = "/check-shelter"
 # Создание списка для хранения данных
 data_list = []
 
-# Обработчик для команды /start
-#@bot.message_handler(state= Mystate.notification)
-#def start(message):
 
- #   bot.delete_state(message.from_user.id, message.chat.id)
-  #  bot.set_state(message.from_user.id,Mystate.notification1,message.chat.id)
-
-# Обработчик для текстовых сообщений
 @bot.message_handler(func=lambda message: True, state= Mystate.notification1)
 def handle_messages(message):
 
