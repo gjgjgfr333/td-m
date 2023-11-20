@@ -91,7 +91,6 @@ def answer(call: CallbackQuery):
         response = requests.get(f"{server_url}")
         if response.status_code == 200:
             print(f"Error sending data: {response.status_code}")
-            print(response)
         else:
             print(f"Error sending data: {response.status_code}")
             print(response)
@@ -108,7 +107,8 @@ def answer(call: CallbackQuery):
         bot.copy_message(chat_id=user_chat_ids[0], from_chat_id=call.message.chat.id, message_id=last_message,reply_markup=
                          finish())
         bot.delete_message(chat_id=call.message.chat.id,message_id=last_message)
-        user_chat_ids.clear()
+        user_chat_ids.pop(0)
+        bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
     elif call.data == "crossmark_no":
         xm=bot.send_message(chat_id=call.message.chat.id, text='<b>Ваши данные не прошли проверку администратором.</b>\n'
                                                                'Проверьте соответствие всех пунктов получения промокода и попробуйте снова.\n'
@@ -124,8 +124,9 @@ def answer(call: CallbackQuery):
         bot.copy_message(chat_id=user_chat_ids[0], from_chat_id=call.message.chat.id, message_id=last_message,reply_markup=
                          finish())
         bot.delete_message(chat_id=call.message.chat.id,message_id=last_message)
-        user_chat_ids.clear()
+        user_chat_ids.pop(0)
         print(user_chat_ids)
+        bot.delete_message(chat_id=call.message.chat.id,message_id=call.message.message_id)
     elif call.data == "for_sellers_yes":
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id,
                               text='<b>Отпаравьте ссылку на ваш instagram аккаунт</b>, Администрация проверит наличие '

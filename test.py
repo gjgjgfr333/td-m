@@ -18,7 +18,7 @@ async def check_SERVER():
     while True:
         result = await send_request()
         if result is True:
-            await asyncio.sleep(1800)
+            await asyncio.sleep(60)
             print("начал")
         else:
             send_message(adm_chat, "упал")

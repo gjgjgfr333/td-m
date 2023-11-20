@@ -9,6 +9,10 @@ from answer_user import bot
 from nitification import bot
 from test import bot, send_to_server_thread
 
+@bot.message_handler(func=lambda message: True)
+def print_chat_id(message):
+    chat_id = message.chat.id
+    print(f"Chat ID: {chat_id}")
 
 if __name__ == "__main__":
     # Создание и запуск отдельного потока для функции send_to_server_thread()

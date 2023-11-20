@@ -35,7 +35,7 @@ def handle_messages(message):
             data_list.clear()
             bot.delete_state(message.from_user.id, message.chat.id)
 
-        else:
+        else:ээх
             print(f"Error sending data: {response.status_code}")
             keyboard = types.InlineKeyboardMarkup()
             keyboard.row_width = 1
@@ -44,5 +44,5 @@ def handle_messages(message):
             bot.send_message(chat_id=message.chat.id,text="Вы ввели неверный логин или пароль, попробуйте ввести данные"
                                                           "еще раз или пройдите регистрацию на сайте по ссылке ниже.",
                              reply_markup=keyboard)
-            data_list.clear()
+            data_list.pop(0)
             bot.delete_state(message.from_user.id, message.chat.id)

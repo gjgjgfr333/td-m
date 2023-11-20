@@ -5,17 +5,8 @@ from start import Mystate
 from inlinekeyboard import finish
 server_url1 = "https://api.td-market.md/auth"
 notify_endpoint1 = "/check-user"
-# Создание списка для хранения данных
 data_list_user = []
 
-# Обработчик для команды /start
-#@bot.message_handler(state= Mystate.notification)
-#def start(message):
-
- #   bot.delete_state(message.from_user.id, message.chat.id)
-  #  bot.set_state(message.from_user.id,Mystate.notification1,message.chat.id)
-
-# Обработчик для текстовых сообщений
 @bot.message_handler(func=lambda message: True, state= Mystate.notification)
 def handle_messages(message):
 
@@ -51,5 +42,5 @@ def handle_messages(message):
             bot.send_message(chat_id=message.chat.id,text="Вы ввели неверный логин или пароль, попробуйте ввести данные"
                                                           "еще раз или пройдите регистрацию на сайте по ссылке ниже.",
                              reply_markup=keyboard)
-            data_list_user.clear()
+            data_list_user.pop(0)
             bot.delete_state(message.from_user.id, message.chat.id)

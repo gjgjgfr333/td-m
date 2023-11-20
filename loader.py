@@ -6,6 +6,7 @@ from telebot import StateMemoryStorage, StatePickleStorage
 ststorage = StatePickleStorage()
 state_storage = StateMemoryStorage()
 
+
 bot = telebot.TeleBot(state_storage=ststorage, token="6016281493:AAEIcbTY5adYAHn2rA6j2Kl8_KzTMD3iTdw",
                       parse_mode='HTML',
                       disable_web_page_preview=True, allow_sending_without_reply=True,
