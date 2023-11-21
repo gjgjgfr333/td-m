@@ -35,7 +35,7 @@ def handle_messages(message):
             data_list.clear()
             bot.delete_state(message.from_user.id, message.chat.id)
 
-        else:ээх
+        else:
             print(f"Error sending data: {response.status_code}")
             keyboard = types.InlineKeyboardMarkup()
             keyboard.row_width = 1

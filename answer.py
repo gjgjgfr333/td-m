@@ -8,7 +8,7 @@ from inlinekeyboard import button_for_order, button_cgange, button_pay, buttun_d
     button_order_not_need, finish, msgg, for_sellerss, url_button, kross_marketing, akt_tovara
 from  nitification import data_list
 from notification__user import data_list_user
-from answer_user import user_chat_ids
+from answer_user import user_chat_ids, user_chat_ids2
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -334,6 +334,40 @@ def answer(call: CallbackQuery):
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text="Введите ваше сообщение")
         bot.set_state(call.from_user.id, Mystate.admin_call_1, call.message.chat.id)
 
-    # elif call.data == "call_admin_1":
-    #  bot.send_message(chat_id=admin_chat_id, text= "Введите ваше сообщение (Фото,видео,текст)")
-    # bot.set_state(call.from_user.id, Mystate.admin_call_1, call.message.chat.id)
+    elif call.data == "infa_yes":
+        xm = bot.send_message(chat_id=call.message.chat.id, text=f'Поздравляем ваши данные были одобрены администратором'
+                                                                 f'. В ближайше время они будут использоваться. Спасибо и хорошего дня) ')
+        last_message = xm.message_id
+
+        print(user_chat_ids2)
+        # Прямая пересылка исходного сообщения пользователя в чат админа
+        bot.copy_message(chat_id=user_chat_ids2[0], from_chat_id=call.message.chat.id, message_id=last_message, reply_markup=
+        finish())
+        bot.delete_message(chat_id=call.message.chat.id, message_id=last_message)
+        user_chat_ids2.pop(0)
+        bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
+    elif call.data == "infa_no":
+        xm = bot.send_message(chat_id=call.message.chat.id, text='Увы, но Ваши материалы не прошли проверку администратором и не будут использованны на сайте.'
+                                                                 'Попробуйте еще раз')
+        last_message = xm.message_id
+        bot.copy_message(chat_id=user_chat_ids2[0], from_chat_id=call.message.chat.id, message_id=last_message, reply_markup=
+        finish())
+        bot.delete_message(chat_id=call.message.chat.id, message_id=last_message)
+        user_chat_ids2.pop(0)
+        print(user_chat_ids2)
+        bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
+
+    elif call.data == "slaider":
+        with open('photo2.png', 'rb') as file:
+            photo2 = file.read()
+        bot.send_photo(chat_id=call.message.chat.id,photo=photo2, caption='Отправьте нам ваше фото для слайдера'
+                                                                          'и мы разместим его на главной странице сайта.\n\n'
+                                                                          'Параметры фото:')
+        bot.set_state(call.from_user.id,Mystate.my_money,call.message.chat.id)
+
+    elif call.data == "my_money":
+        with open('photo3.jpg', 'rb') as file:
+            photo3 = file.read()
+        bot.send_photo(chat_id=call.message.chat.id,photo=photo3, caption='Отправьте нам фото вашей модели на сером фоне и мы сделаем из этого рекламу.\n\n'
+                                                                          'Параметры фото:')
+        bot.set_state(call.from_user.id,Mystate.my_money,call.message.chat.id)

@@ -204,3 +204,27 @@ def user_no_answer(message):
     bot.send_message(chat_id=message.chat.id, text="Вам скоро ответят",
                      reply_markup=finish())
     bot.delete_state(message.from_user.id, message.chat.id)
+
+gruop_chat_predlojka='-4042549465'
+user_chat_ids2=[]
+@bot.message_handler(content_types=util.content_type_media, chat_types=['private'], state=Mystate.my_money)
+def user_answer(message):
+    global user_chat_ids2
+    user_chat_id = message.chat.id
+    user_chat_ids2.append(user_chat_id)
+    print (user_chat_ids2)
+    mk = types.InlineKeyboardMarkup()
+    mk.row_width=2
+    mk.add(InlineKeyboardButton(text='✅',callback_data='infa_yes'),
+           InlineKeyboardButton(text='❌',callback_data='infa_no'))
+    bot.send_message(chat_id=gruop_chat_predlojka, text=f'Данный пользователь {message.from_user.first_name}'
+                                                 f' преслал предложку')
+    f = bot.forward_message(chat_id=gruop_chat_predlojka, from_chat_id=message.chat.id, message_id=message.message_id)
+    bot.send_message(chat_id=gruop_chat_predlojka, text='''#id{id}'''.format(id=message.chat.id), reply_to_message_id=f.message_id,
+                     reply_markup=mk)
+    xm = bot.send_message(chat_id=message.chat.id,
+                          text='''<b>Ваше сообщение было <i>успешно доставлено</i> администратору ✅</b>, вам скоро ответят)''',
+                          reply_to_message_id=message.message_id)
+    bot.send_message(chat_id=message.chat.id, text="В течении суток ваше сообщение будет проверено",
+                     reply_markup=finish())
+    bot.delete_state(message.from_user.id, message.chat.id)

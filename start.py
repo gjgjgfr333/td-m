@@ -26,6 +26,7 @@ class Mystate(StatesGroup):
     callback_staff = State()
     notification = State()
     notification1 = State()
+    my_money=State()
 
 @bot.message_handler(commands=['start'])
 def wellcome(message):

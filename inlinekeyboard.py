@@ -44,7 +44,9 @@ def for_sellerss():
     markup9.add(InlineKeyboardButton("Стать продавцом🧌", callback_data="seller_create"),
                InlineKeyboardButton("Для сотрудничества(кроссмаркетинг)💰", callback_data="cross_mark"),
                InlineKeyboardButton("Доставка👣", callback_data="seller_dilevery"),
-                InlineKeyboardButton(text="Получать уведомления от td-market", callback_data="notification" ))
+                InlineKeyboardButton(text="Получать уведомления от td-market", callback_data="notification" ),
+                InlineKeyboardButton(text="Разместить свой магазин на слайдере🏞️", callback_data="slaider" ),
+                InlineKeyboardButton(text="Ваша реклама за наши деньги🎁", callback_data="my_money" ))
 
     return markup9
 
