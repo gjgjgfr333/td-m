@@ -68,7 +68,7 @@ def answer(call: CallbackQuery):
         bot.set_state(call.from_user.id,Mystate.notification,call.message.chat.id)
 
     elif call.data == "photochka":
-        with open('photo.jpg', 'rb') as file:
+        with open('D:\\telebot2\\td-m\\stuff.png', 'rb') as file:
             photo = file.read()
         bot.send_photo(chat_id=call.message.chat.id,
                        photo=photo, reply_markup=back())
@@ -161,7 +161,7 @@ def answer(call: CallbackQuery):
                                    'у Продавца.', reply_markup=akt_tovara())
 
     elif call.data == "akt":
-        with open('АКТ.docx', 'rb') as file:
+        with open('D:\\telebot2\\td-m\\АКТ.docx', 'rb') as file:
             f = file.read()
         bot.send_document(chat_id=call.message.chat.id, document=f,
                           reply_markup=back())
@@ -358,7 +358,7 @@ def answer(call: CallbackQuery):
         bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
 
     elif call.data == "slaider":
-        with open('photo2.png', 'rb') as file:
+        with open('D:\\telebot2\\td-m\\photo2.png', 'rb') as file:
             photo2 = file.read()
         bot.send_photo(chat_id=call.message.chat.id,photo=photo2, caption='Отправьте нам ваше фото для слайдера'
                                                                           'и мы разместим его на главной странице сайта.\n\n'
@@ -366,8 +366,9 @@ def answer(call: CallbackQuery):
         bot.set_state(call.from_user.id,Mystate.my_money,call.message.chat.id)
 
     elif call.data == "my_money":
-        with open('photo3.jpg', 'rb') as file:
+        with open('D:\\telebot2\\td-m\\photo3.jpg', 'rb') as file:
             photo3 = file.read()
         bot.send_photo(chat_id=call.message.chat.id,photo=photo3, caption='Отправьте нам фото вашей модели на сером фоне и мы сделаем из этого рекламу.\n\n'
                                                                           'Параметры фото:')
         bot.set_state(call.from_user.id,Mystate.my_money,call.message.chat.id)
+        л=0

@@ -31,7 +31,7 @@ class Mystate(StatesGroup):
 @bot.message_handler(commands=['start'])
 def wellcome(message):
     try:
-        with open("users.json", 'r') as f_o:
+        with open("D:\\telebot2\\td-m\\users.json", 'r') as f_o:
             data_from_json = json.load(f_o)
         user_id = message.from_user.id
         username = message.from_user.first_name
@@ -40,7 +40,7 @@ def wellcome(message):
             data_from_json[user_id] = {"username": username,"usersurname": usersurname,"user_id":user_id}
 
 
-        with open('users.json', 'w') as f_o:
+        with open('D:\\telebot2\\td-m\\users.json', 'w') as f_o:
             json.dump(data_from_json, f_o, indent=4, ensure_ascii=False)
 
         bot.send_message(chat_id=message.chat.id,

@@ -25,7 +25,7 @@ def send_to_all(message):
         # получаем текст сообщения для рассылки
         text = message.text.replace("/all ", "")
         # открываем файл с данными юзеров
-        with open("users.json", "r") as file:
+        with open("D:\\telebot2\\td-m\\users.json", "r") as file:
             users = json.load(file)
         # отправляем сообщение каждому юзеру
         for user_id in users:
