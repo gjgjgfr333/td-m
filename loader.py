@@ -1,5 +1,3 @@
-import asyncio
-
 import telebot
 from telebot import StateMemoryStorage, StatePickleStorage
 
